@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import ActualWeatherResult from "../ActualWeatherResult/ActualWeatherResult";
+import ForecastWeatherResult from "../ForecastWeatherResult/ForecastWeatherResult";
 import Form from '../Form/Form';
 import './Content.scss';
 
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+const API_KEY_ACTUAL = process.env.REACT_APP_API_KEY_ACTUAL;
+const API_KEY_FORECAST = process.env.REACT_APP_API_KEY_FORECAST;
 
 const date = new Date().toLocaleDateString("pl", {
     day: 'numeric',
@@ -32,12 +34,15 @@ const Content = () => {
     const sunriseTime = new Date(sunrise * 1000).toLocaleTimeString();
     const sunsetTime = new Date(sunset * 1000).toLocaleTimeString();
 
-    const API_URL = `http://api.openweathermap.org/data/2.5/weather?q=${inputCityValue}&lang=pl&appid=${API_KEY}&units=metric`;
+    const API_URL_ACTUAL = `http://api.openweathermap.org/data/2.5/weather?q=${inputCityValue}&lang=pl&appid=${API_KEY_ACTUAL}&units=metric`;
+
+
+    const API_URL_FORECAST = `http://api.openweathermap.org/data/2.5/forecast?q=${inputCityValue}&lang=pl&appid=${API_KEY_FORECAST}&units=metric`
 
 
 
     const getActualWeather = () => {
-        axios.get(API_URL)
+        axios.get(API_URL_ACTUAL)
             .then(response => {
                 // console.log(response);
                 const { data } = response;
