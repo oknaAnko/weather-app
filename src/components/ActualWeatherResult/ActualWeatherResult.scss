@@ -1,0 +1,19 @@
+.results {
+  font-size: 1.8rem;
+  margin-top: 30px;
+  text-align: left;
+
+  p {
+    padding: 10px 0;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  p.description {
+    padding: 20px 0;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+}
