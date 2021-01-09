@@ -1,7 +1,7 @@
 import React from 'react';
 import './ForecastWeatherResult.scss';
 
-const ForecastWeatherResult = ({ days, forecastTemp, hours }) => {
+const ForecastWeatherResult = ({ days, forecastTemp, hours, icons, precipitation }) => {
     let indexTab = []
     hours.forEach((hour, index) => {
         if (hour === "00:00") {
@@ -23,6 +23,15 @@ const ForecastWeatherResult = ({ days, forecastTemp, hours }) => {
 
     const forecastTempShowed = forecastTemp.map((temp, idx) => <div key={idx}>{temp}</div>);
 
+    const iconShowed = icons.map((icon, idx) => (
+        <div className="icon" key={idx}>
+            <img src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="weather-icon" />
+
+        </div>
+    ));
+
+    const precipitationShowed = precipitation.map((precipitation, idx) => <div key={idx}>{precipitation} %</div>);
+
 
     return (
         <div>
@@ -38,6 +47,13 @@ const ForecastWeatherResult = ({ days, forecastTemp, hours }) => {
                 <div className="temp">
                     <h3>&#176;C</h3>
                     {forecastTempShowed}
+                </div>
+                <div className="icons">
+                    {iconShowed}
+                </div>
+                <div className="precipitations">
+                    <h3>Opady</h3>
+                    {precipitationShowed}
                 </div>
 
             </div>

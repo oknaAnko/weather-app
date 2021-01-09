@@ -33,6 +33,8 @@ const Content = () => {
     const [days, setDays] = useState([]);
     const [forecastTemp, setForecastTemp] = useState([]);
     const [hours, setHours] = useState([]);
+    const [icons, setIcons] = useState([]);
+    const [precipitation, setPrecipitation] = useState([]);
     //errors state
     const [isError, setIsError] = useState("");
 
@@ -87,6 +89,12 @@ const Content = () => {
                 const fore_temp = data.list.map(item => item.main.temp);
                 setForecastTemp(fore_temp);
 
+                const icons = data.list.map(item => item.weather[0].icon)
+                setIcons(icons)
+
+                const precipitations = data.list.map(item => item.pop)
+                setPrecipitation(precipitations)
+
                 setIsError("no-forecast");
 
             })
@@ -107,7 +115,7 @@ const Content = () => {
     const showResult = () => {
         if (isError === "yes") return <p className="error-message">Nie ma takiego miasta</p>;
         else if (isError === "no-actual") return <ActualWeatherResult description={description} humidity={humidity} sunriseTime={sunriseTime} sunsetTime={sunsetTime} temp={temp} tempFeelsLike={tempFeelsLike} wind={wind} />;
-        else if (isError === "no-forecast") return <ForecastWeatherResult days={days} forecastTemp={forecastTemp} hours={hours} />;
+        else if (isError === "no-forecast") return <ForecastWeatherResult days={days} forecastTemp={forecastTemp} hours={hours} icons={icons} precipitation={precipitation} />;
         else if (isError === "") return null
     }
     let result = showResult();
