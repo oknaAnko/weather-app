@@ -21,7 +21,7 @@ const ForecastWeatherResult = ({ days, forecastTemp, hours, icons, precipitation
 
     const hourShowed = hours.map((hour, idx) => <div key={idx}>{hour}</div>);
 
-    const forecastTempShowed = forecastTemp.map((temp, idx) => <div key={idx}>{temp}</div>);
+    const forecastTempShowed = forecastTemp.map((temp, idx) => <div key={idx}>{temp} &#176;C</div>);
 
     const iconShowed = icons.map((icon, idx) => (
         <div className="icon" key={idx}>

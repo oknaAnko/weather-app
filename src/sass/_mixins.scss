@@ -1,0 +1,10 @@
+@mixin results-container-styles() {
+  font-size: 1.8rem;
+  margin-top: 30px;
+  padding-top: 30px;
+  height: 65vh;
+  border: 0.5px solid #777;
+  border-radius: 20px;
+  background-color: rgba(48, 51, 54, 0.5);
+  box-shadow: 0 0 10px #777;
+}

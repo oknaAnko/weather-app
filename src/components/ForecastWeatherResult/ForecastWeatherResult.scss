@@ -1,34 +1,45 @@
+@import '../../sass/mixins';
+
+$padding: 20px 0;
+$border-bottom: 1px solid black;
+
 .result-container {
   display: flex;
   overflow: auto;
-  font-size: 1.8rem;
-  margin-top: 30px;
-  padding-top: 30px;
-  height: 65vh;
-  border: 0.5px solid #777;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 10px #777;
+  @include results-container-styles();
 }
 
-.days,
-.hours,
-.temp {
-  display: flex;
-  flex-direction: column;
+.icons div {
+  position: relative;
+  width: 200px;
+  height: 63px;
+  border-bottom: $border-bottom;
+
+  &:nth-child(1) {
+    margin-top: 25px;
+  }
+
+  img {
+    position: absolute;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .days div {
-  width: 120px;
-  padding: 20px 0;
+  width: 200px;
+  padding: $padding;
   border-bottom: 1px solid transparent;
 }
 
 .hours div,
-.temp div {
+.temp div,
+.precipitations div {
   width: 100px;
-  border-bottom: 1px solid gray;
-  padding: 20px 0;
+  padding: $padding;
+  border-bottom: $border-bottom;
 }
 
 .visible {
@@ -40,6 +51,3 @@
   color: transparent;
 }
 
-h3 {
-  padding-bottom: 20px 0;
-}

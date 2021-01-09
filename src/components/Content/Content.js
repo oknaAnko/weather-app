@@ -74,7 +74,6 @@ const Content = () => {
     };
 
     const getForecastWeather = () => {
-        console.log('dzdzdzdzdd');
         axios.get(API_URL_FORECAST)
             .then(response => {
                 console.log(response);
@@ -86,7 +85,7 @@ const Content = () => {
                 const hours = data.list.map(item => item.dt_txt.slice(11, 16));
                 setHours(hours);
 
-                const fore_temp = data.list.map(item => item.main.temp);
+                const fore_temp = data.list.map(item => Math.round(item.main.temp));
                 setForecastTemp(fore_temp);
 
                 const icons = data.list.map(item => item.weather[0].icon)
@@ -113,7 +112,7 @@ const Content = () => {
     };
 
     const showResult = () => {
-        if (isError === "yes") return <p className="error-message">Nie ma takiego miasta</p>;
+        if (isError === "yes") return <p className="error-message">Przepraszamy. Nie ma takiego miasta</p>;
         else if (isError === "no-actual") return <ActualWeatherResult description={description} humidity={humidity} sunriseTime={sunriseTime} sunsetTime={sunsetTime} temp={temp} tempFeelsLike={tempFeelsLike} wind={wind} />;
         else if (isError === "no-forecast") return <ForecastWeatherResult days={days} forecastTemp={forecastTemp} hours={hours} icons={icons} precipitation={precipitation} />;
         else if (isError === "") return null
