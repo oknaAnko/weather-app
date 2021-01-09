@@ -1,0 +1,45 @@
+.result-container {
+  display: flex;
+  overflow: auto;
+  font-size: 1.8rem;
+  margin-top: 30px;
+  padding-top: 30px;
+  height: 65vh;
+  border: 0.5px solid #777;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px #777;
+}
+
+.days,
+.hours,
+.temp {
+  display: flex;
+  flex-direction: column;
+}
+
+.days div {
+  width: 120px;
+  padding: 20px 0;
+  border-bottom: 1px solid transparent;
+}
+
+.hours div,
+.temp div {
+  width: 100px;
+  border-bottom: 1px solid gray;
+  padding: 20px 0;
+}
+
+.visible {
+  color: black;
+  font-weight: bold;
+}
+
+.not-visible {
+  color: transparent;
+}
+
+h3 {
+  padding-bottom: 20px 0;
+}

@@ -19,8 +19,9 @@ const date = new Date().toLocaleDateString("pl", {
 });
 
 const Content = () => {
+    //form state    
     const [inputCityValue, setInputCityValue] = useState('');
-
+    //actualweather state
     const [description, setDescription] = useState([]);
     const [humidity, setHumidity] = useState('');
     const [sunrise, setSunrise] = useState('');
@@ -28,17 +29,20 @@ const Content = () => {
     const [temp, setTemp] = useState('');
     const [tempFeelsLike, setTempFeelsLike] = useState('');
     const [wind, setWind] = useState(null);
-
+    //forecast state
+    const [days, setDays] = useState([]);
+    const [forecastTemp, setForecastTemp] = useState([]);
+    const [hours, setHours] = useState([]);
+    //errors state
     const [isError, setIsError] = useState("");
+
 
     const sunriseTime = new Date(sunrise * 1000).toLocaleTimeString();
     const sunsetTime = new Date(sunset * 1000).toLocaleTimeString();
 
     const API_URL_ACTUAL = `http://api.openweathermap.org/data/2.5/weather?q=${inputCityValue}&lang=pl&appid=${API_KEY_ACTUAL}&units=metric`;
 
-
     const API_URL_FORECAST = `http://api.openweathermap.org/data/2.5/forecast?q=${inputCityValue}&lang=pl&appid=${API_KEY_FORECAST}&units=metric`
-
 
 
     const getActualWeather = () => {
@@ -57,7 +61,7 @@ const Content = () => {
                 setSunrise(data.sys.sunrise);
                 setSunset(data.sys.sunset);
 
-                setIsError("no")
+                setIsError("no-actual")
             })
             .catch(error => {
                 const { response } = error;
@@ -66,6 +70,31 @@ const Content = () => {
                 setIsError("yes");
             })
     };
+
+    const getForecastWeather = () => {
+        console.log('dzdzdzdzdd');
+        axios.get(API_URL_FORECAST)
+            .then(response => {
+                console.log(response);
+                const { data } = response;
+
+                const days = data.list.map(item => item.dt_txt.slice(0, 10));
+                setDays(days);
+
+                const hours = data.list.map(item => item.dt_txt.slice(11, 16));
+                setHours(hours);
+
+                const fore_temp = data.list.map(item => item.main.temp);
+                setForecastTemp(fore_temp);
+
+                setIsError("no-forecast");
+
+            })
+            .catch(error => {
+                console.log(error);
+                setIsError("yes");
+            })
+    }
 
     const resetInput = () => {
         setInputCityValue("")
@@ -77,7 +106,8 @@ const Content = () => {
 
     const showResult = () => {
         if (isError === "yes") return <p className="error-message">Nie ma takiego miasta</p>;
-        else if (isError === "no") return <ActualWeatherResult description={description} humidity={humidity} sunriseTime={sunriseTime} sunsetTime={sunsetTime} temp={temp} tempFeelsLike={tempFeelsLike} wind={wind} />;
+        else if (isError === "no-actual") return <ActualWeatherResult description={description} humidity={humidity} sunriseTime={sunriseTime} sunsetTime={sunsetTime} temp={temp} tempFeelsLike={tempFeelsLike} wind={wind} />;
+        else if (isError === "no-forecast") return <ForecastWeatherResult days={days} forecastTemp={forecastTemp} hours={hours} />;
         else if (isError === "") return null
     }
     let result = showResult();
@@ -89,11 +119,17 @@ const Content = () => {
         showResult();
     };
 
+    const handleForecastClick = () => {
+        getForecastWeather();
+        resetInput();
+        showResult();
+    }
+
     return (
         <main>
             <h1>Pogoda w Twoim mieście</h1>
             <p className="today"> {date} </p>
-            <Form city={inputCityValue} handleChangeCity={handleChangeCity} handleActualClick={handleActualClick} />
+            <Form city={inputCityValue} handleChangeCity={handleChangeCity} handleActualClick={handleActualClick} handleForecastClick={handleForecastClick} />
             {result}
         </main>
     );
